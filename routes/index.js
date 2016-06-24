@@ -27,7 +27,7 @@ router.get('/test', function(req, res, next) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-	res.render('Welcome TechTracker');
+	res.send('Welcome TechTracker');
 });
 
 
