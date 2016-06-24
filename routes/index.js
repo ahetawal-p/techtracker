@@ -72,7 +72,7 @@ var updateObject = function(index){
 router.post('/sendsms', function(req, res, next) {
 	console.log(req.body);
 	client.messages.create({
-    body: 'Your Technician is on way. Follow link to see ETA: https://c.na30.visual.force.com/apex/TechTrackerRooj. Thank you.',
+    body: 'Your Technician is on way. Follow link to see ETA: https://c.na30.visual.force.com/apex/TechTracker. Thank you.',
     to: '+14083726409',  // Text this number
     from: '+16507535865' // From a valid Twilio number
 	},
@@ -88,7 +88,7 @@ router.post('/sendsms', function(req, res, next) {
 router.get('/sendsms', function(req, res, next) {
 	console.log(req.body);
 	client.messages.create({
-    body: 'Your Technician is on way. Follow link to see ETA: https://c.na30.visual.force.com/apex/TechTrackerRooj. Thank you.',
+    body: 'Your Technician is on way. Follow link to see ETA: https://c.na30.visual.force.com/apex/TechTracker. Thank you.',
     to: '+14083726409',  // Text this number
     from: '+16507535865' // From a valid Twilio number
 	},
