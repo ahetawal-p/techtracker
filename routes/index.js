@@ -12,9 +12,9 @@ var client = new twilio.RestClient(accountSid, authToken);
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	
-	dbUtil.query("SELECT * FROM salesforce.contact", null, false)
+	dbUtil.query("SELECT * FROM salesforce.technician__c WHERE sfid=($1)", ['a0136000006qlTbAAI'], false)
 	.done(function(result){
-		res.send("Result " + userEmail);
+		res.send("Result " + result);
 	},
     function(error){
     	console.log(error);
