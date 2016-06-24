@@ -38,11 +38,13 @@ var runUpdate = function(){
     if(!isRunning){
     	isRunning = true;
 	    for(i=0; i<80; i++) {
-	        lat = startLat + i * latDelta;
-	        long = startLong + i * lngDelta;
-	     	setTimeout(function () {
-	            updateObject(lat, long, i);
-	        }, 2000);   
+	    	(function(i){ 
+     			lat = startLat + i * latDelta;
+	        	long = startLong + i * lngDelta;
+     			setTimeout(function () {
+	            		updateObject(lat, long, i);
+	        			}, 2000); 
+     		})(i);
 	     }
     }
 }
