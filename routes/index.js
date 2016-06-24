@@ -16,7 +16,7 @@ router.get('/', function(req, res, next) {
 	dbUtil.query("SELECT * FROM salesforce.technician__c WHERE sfid=($1)", ['a0136000006qmebAAA'], true)
 	.done(function(result){
 		runUpdate();
-		res.send("Result " + result.technicianlocation__latitude__s);
+		res.send("Result ");
 	},
     function(error){
     	console.log(error);
