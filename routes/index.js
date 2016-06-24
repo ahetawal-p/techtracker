@@ -8,13 +8,14 @@ var authToken = '81db504afcaa33b2adfb53de52e9463a';   // Your Auth Token from ww
 var twilio = require('twilio');
 var client = new twilio.RestClient(accountSid, authToken);
 
+var isRunning = false;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	
-	dbUtil.query("SELECT * FROM salesforce.technician__c WHERE sfid=($1)", ['a0136000006qlTbAAI'], true)
+	dbUtil.query("SELECT * FROM salesforce.technician__c WHERE sfid=($1)", ['a0136000006qmebAAA'], true)
 	.done(function(result){
-		updateObject();
+		runUpdate();
 		res.send("Result " + result.technicianlocation__latitude__s);
 	},
     function(error){
@@ -25,11 +26,36 @@ router.get('/', function(req, res, next) {
   //res.render('index', { title: 'Express' });
 });
 
-var updateObject = function(){
 
-	dbUtil.query("UPDATE salesforce.technician__c set technicianlocation__latitude__s=($1), technicianlocation__longitude__s=($2) WHERE sfid=($3)", ['12.12', '10.10', 'a0136000006qlTbAAI'])
+var runUpdate = function(){
+	var startLat = 37.808000;
+    var startLong = -122.417743;
+    var endLat = 37.759006;
+    var endLong = -122.418594;
+    var pointsNo = 80;
+    var latDelta = (endLat - startLat) / pointsNo;
+    var lngDelta = (endLong - startLong) / pointsNo;
+    if(!isRunning){
+    	isRunning = true;
+	    for(i=0; i<80; i++) {
+	        lat = startLat + i * latDelta;
+	        long = startLong + i * lngDelta;
+	     	setTimeout(function () {
+	            updateObject(lat, long, i);
+	        }, 2000);   
+	     }
+    }
+}
+
+var updateObject = function(lat, long, index){
+	if (index == 80){
+		isRunning = false;
+	}
+
+	console.log("Running now.... " + index);
+	dbUtil.query("UPDATE salesforce.technician__c set technicianlocation__latitude__s=($1), technicianlocation__longitude__s=($2) WHERE sfid=($3)", [lat, long, 'a0136000006qmebAAA'])
 	.done(function(updateCount){
-		console.log("UPDATE COUNT IS >> " + updateCount);
+		console.log("Completed update.." + index);
 	},
     function(error){
     	console.log(error);
