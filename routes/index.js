@@ -12,9 +12,10 @@ var client = new twilio.RestClient(accountSid, authToken);
 /* GET home page. */
 router.get('/', function(req, res, next) {
 	
-	dbUtil.query("SELECT * FROM salesforce.technician__c WHERE sfid=($1)", ['a0136000006qlTbAAI'], false)
+	dbUtil.query("SELECT * FROM salesforce.technician__c WHERE sfid=($1)", ['a0136000006qlTbAAI'], true)
 	.done(function(result){
-		res.send("Result " + result);
+		updateObject();
+		res.send("Result " + result.technicianlocation__latitude__s);
 	},
     function(error){
     	console.log(error);
@@ -23,6 +24,17 @@ router.get('/', function(req, res, next) {
 
   //res.render('index', { title: 'Express' });
 });
+
+var updateObject = function(){
+
+	dbUtil.query("UPDATE salesforce.technician__c set technicianlocation__latitude__s=($1), technicianlocation__longitude__s=($2) WHERE sfid=($3)", ['12.12', '10.10', 'a0136000006qlTbAAI'])
+	.done(function(updateCount){
+		console.log("UPDATE COUNT IS >> " + updateCount);
+	},
+    function(error){
+    	console.log(error);
+    });
+}
 
 /* GET home page. */
 router.post('/sendsms', function(req, res, next) {
