@@ -26,17 +26,17 @@ router.get('/', function(req, res, next) {
   //res.render('index', { title: 'Express' });
 });
 
-var startLat = 60.174039;
-    var startLong = 24.940939;
-    var endLat = 59.337174;
-    var endLong = 18.067883;
+var startLat = 37.79329;
+    var startLong = -122.39452;
+    var endLat = 37.7577;
+    var endLong = -122.4376;
     var pointsNo = 80;
     var latDelta = (endLat - startLat) / pointsNo;
     var lngDelta = (endLong - startLong) / pointsNo;
 
 var runUpdate = function(){
 	
-    for(i=0; i<2; i++) {
+    for(i=0; i<80; i++) {
 
     	(function(i){ 
  			setTimeout(function () {
