@@ -41,7 +41,7 @@ var runUpdate = function(){
     	(function(i){ 
  			setTimeout(function () {
             		updateObject(i);
-        			}, 1000); 
+        			}, 20000); 
  		})(i);
      }
     
