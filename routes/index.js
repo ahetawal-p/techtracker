@@ -11,7 +11,7 @@ var client = new twilio.RestClient(accountSid, authToken);
 var isRunning = false;
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/test', function(req, res, next) {
 	
 	dbUtil.query("SELECT * FROM salesforce.technician__c WHERE sfid=($1)", ['a0136000006qmebAAA'], true)
 	.done(function(result){
@@ -22,9 +22,14 @@ router.get('/', function(req, res, next) {
     	console.log(error);
     	next(error);
 	});
-
-  //res.render('index', { title: 'Express' });
 });
+
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+	res.render('Welcome TechTracker');
+});
+
 
 var startLat = 37.79329;
     var startLong = -122.39452;
@@ -63,12 +68,12 @@ var updateObject = function(index){
     });
 }
 
-/* GET home page. */
+/* Send sms. */
 router.post('/sendsms', function(req, res, next) {
 	console.log(req.body);
 	client.messages.create({
-    body: 'Hello from Salesforce',
-    to: '+14156402834',  // Text this number
+    body: 'Your Technician is on way. Follow link to see ETA: https://c.na30.visual.force.com/apex/TechTrackerRooj. Thank you.',
+    to: '+14087720957',  // Text this number
     from: '+16507535865' // From a valid Twilio number
 	},
 	function(err, message) {
