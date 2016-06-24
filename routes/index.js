@@ -77,7 +77,10 @@ router.get('/sendsms', function(req, res, next) {
     from: '+16507535865' // From a valid Twilio number
 	},
 	function(err, message) {
-    	console.log(message.sid);
+		if(err){
+			console.log(err)
+		}
+    	//console.log(message.sid);
     	res.send("Sent");
 	});
 });
