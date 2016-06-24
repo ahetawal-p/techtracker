@@ -35,24 +35,20 @@ var runUpdate = function(){
     var pointsNo = 80;
     var latDelta = (endLat - startLat) / pointsNo;
     var lngDelta = (endLong - startLong) / pointsNo;
-    if(!isRunning){
-    	isRunning = true;
-	    for(i=0; i<80; i++) {
-	    	(function(i){ 
-     			lat = startLat + i * latDelta;
-	        	long = startLong + i * lngDelta;
-     			setTimeout(function () {
-	            		updateObject(lat, long, i);
-	        			}, 2000); 
-     		})(i);
-	     }
-    }
+    for(i=0; i<80; i++) {
+    	(function(i){ 
+ 			lat = startLat + i * latDelta;
+        	long = startLong + i * lngDelta;
+ 			setTimeout(function () {
+            		updateObject(lat, long, i);
+        			}, 2000); 
+ 		})(i);
+     }
+    
 }
 
 var updateObject = function(lat, long, index){
-	if (index == 80){
-		isRunning = false;
-	}
+	
 
 	console.log("Running now.... " + index);
 	dbUtil.query("UPDATE salesforce.technician__c set technicianlocation__latitude__s=($1), technicianlocation__longitude__s=($2) WHERE sfid=($3)", [lat, long, 'a0136000006qmebAAA'])
