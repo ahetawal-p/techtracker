@@ -26,29 +26,31 @@ router.get('/', function(req, res, next) {
   //res.render('index', { title: 'Express' });
 });
 
-
-var runUpdate = function(){
-	var startLat = 37.808000;
+var startLat = 37.808000;
     var startLong = -122.417743;
     var endLat = 37.759006;
     var endLong = -122.418594;
     var pointsNo = 80;
     var latDelta = (endLat - startLat) / pointsNo;
     var lngDelta = (endLong - startLong) / pointsNo;
+
+var runUpdate = function(){
+	
     for(i=0; i<80; i++) {
+
     	(function(i){ 
- 			lat = startLat + i * latDelta;
-        	long = startLong + i * lngDelta;
  			setTimeout(function () {
-            		updateObject(lat, long, i);
-        			}, 2000); 
+            		updateObject(i);
+        			}, 10000); 
  		})(i);
      }
     
 }
 
-var updateObject = function(lat, long, index){
+var updateObject = function(index){
 	
+	var lat = startLat + index * latDelta;
+    var long = startLong + index * lngDelta;	
 
 	console.log("Running now.... " + index);
 	dbUtil.query("UPDATE salesforce.technician__c set technicianlocation__latitude__s=($1), technicianlocation__longitude__s=($2) WHERE sfid=($3)", [lat, long, 'a0136000006qmebAAA'])
