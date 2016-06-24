@@ -69,11 +69,27 @@ var updateObject = function(index){
 }
 
 /* Send sms. */
+router.post('/sendsms', function(req, res, next) {
+	console.log(req.body);
+	client.messages.create({
+    body: 'Your Technician is on way. Follow link to see ETA: https://c.na30.visual.force.com/apex/TechTrackerRooj. Thank you.',
+    to: '+14083726409',  // Text this number
+    from: '+16507535865' // From a valid Twilio number
+	},
+	function(err, message) {
+		if(err){
+			console.log(err)
+		}
+    	//console.log(message.sid);
+    	res.send("Sent");
+	});
+});
+
 router.get('/sendsms', function(req, res, next) {
 	console.log(req.body);
 	client.messages.create({
     body: 'Your Technician is on way. Follow link to see ETA: https://c.na30.visual.force.com/apex/TechTrackerRooj. Thank you.',
-    to: '+14087720957',  // Text this number
+    to: '+14083726409',  // Text this number
     from: '+16507535865' // From a valid Twilio number
 	},
 	function(err, message) {
