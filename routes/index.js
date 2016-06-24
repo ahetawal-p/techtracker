@@ -36,7 +36,7 @@ var startLat = 60.174039;
 
 var runUpdate = function(){
 	
-    for(i=0; i<80; i++) {
+    for(i=0; i<2; i++) {
 
     	(function(i){ 
  			setTimeout(function () {
@@ -54,9 +54,9 @@ var updateObject = function(index){
 
 	console.log("Running now.... " + index);
 	console.log("Lat is " + lat);
-	dbUtil.query("UPDATE salesforce.technician__c set technicianlocation__latitude__s=($1), technicianlocation__longitude__s=($2) WHERE sfid=($3)", [lat, long, 'a0136000006qmebAAA'])
+	dbUtil.query("INSERT INTO salesforce.technician__c (name, technicianlocation__latitude__s, technicianlocation__longitude__s) values($1, $2, $3)", ['amits' lat, long])
 	.done(function(updateCount){
-		console.log("Completed update.." + index);
+		console.log("Insert update.." + index);
 	},
     function(error){
     	console.log(error);
