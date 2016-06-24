@@ -1,0 +1,118 @@
+<head>
+ 
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIqyFI4fQnaf_qzgg8q8qIBnKelJSUZn4"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script> 
+<script type="text/javascript"> 
+ 
+$(document).ready(function() {
+  
+  // var chicago = {lat: 41.85, lng: -87.65};
+  // var indianapolis = {lat: 39.79, lng: -86.14};
+
+  // var map = new google.maps.Map(document.getElementById('map'), {
+  //   center: chicago,
+  //   scrollwheel: false,
+  //   zoom: 7
+  // });
+
+  // var directionsDisplay = new google.maps.DirectionsRenderer({
+  //   map: map
+  // });
+
+  // // Set destination, origin and travel mode.
+  // var request = {
+  //   destination: indianapolis,
+  //   origin: chicago,
+  //   travelMode: google.maps.TravelMode.DRIVING
+  // };
+
+  // // Pass the directions request to the directions service.
+  // var directionsService = new google.maps.DirectionsService();
+  // directionsService.route(request, function(response, status) {
+  //   if (status == google.maps.DirectionsStatus.OK) {
+  //     // Display the route on the map.
+  //     directionsDisplay.setDirections(response);
+  //   }
+  // });
+
+
+  var markers = [];
+function initialize() {
+    
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 6,
+        center: new google.maps.LatLng(59.902759, 20.861813),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var startPos = new google.maps.LatLng(60.174039, 24.940939);
+    var endPos = new google.maps.LatLng(59.337174, 18.067883);
+   
+
+    // generate fake points for route
+    var pointsNo = 80;
+    var latDelta = (endPos.lat() - startPos.lat()) / pointsNo;
+    var lngDelta = (endPos.lng() - startPos.lng()) / pointsNo;
+    var positions = [];
+    for (var i = 0; i < pointsNo; i++) {
+        var curLat = startPos.lat() + i * latDelta;
+        var curLng = startPos.lng() + i * lngDelta;
+       // positions.push(new google.maps.LatLng(curLat, curLng));
+
+
+        var curMarker = new google.maps.Marker({
+            map: map,
+            position: new google.maps.LatLng(curLat, curLng),
+            visible: false
+        });
+        markers.push(curMarker);
+    }
+}
+
+
+function displayMarker(markers, index, delay) {    
+    if (index > 0)
+        markers[index - 1].setVisible(false);
+    else {
+        markers[markers.length - 1].setVisible(false);
+    }
+
+    markers[index].setVisible(true);
+    if (index < markers.length - 1) {
+        setTimeout(function () {
+            displayMarker(markers, index + 1, delay);
+        }, delay);
+    } else {
+        displayMarker(markers, 0, delay);
+    }
+}
+
+
+//google.maps.event.addDomListener(window, 'load', function() {
+    initialize();
+//});
+
+$('input[type=button]').click( function() {
+    var delay = 40;
+    displayMarker(markers, 0, delay);
+});
+  
+});
+</script>
+ 
+<style>
+#map {
+  font-family: Arial;
+  font-size:12px;
+  line-height:normal !important;
+  height:500px;
+  background:transparent;
+}
+</style>
+ 
+</head>
+ 
+<body>
+<input type="button" value="Move"/>
+<div id="map" style="width: 480px; height: 320px;"></div>
+</body> 
