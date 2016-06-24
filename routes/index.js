@@ -54,7 +54,7 @@ var updateObject = function(index){
 
 	console.log("Running now.... " + index);
 	console.log("Lat is " + lat);
-	dbUtil.query("INSERT INTO salesforce.technician__c (name, technicianlocation__latitude__s, technicianlocation__longitude__s) values($1, $2, $3)", ['amits' lat, long])
+	dbUtil.query("INSERT INTO salesforce.technician__c (name, technicianlocation__latitude__s, technicianlocation__longitude__s) values($1, $2, $3)", ['amits', lat, long])
 	.done(function(updateCount){
 		console.log("Insert update.." + index);
 	},
