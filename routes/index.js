@@ -69,7 +69,7 @@ var updateObject = function(index){
 }
 
 /* Send sms. */
-router.post('/sendsms', function(req, res, next) {
+router.get('/sendsms', function(req, res, next) {
 	console.log(req.body);
 	client.messages.create({
     body: 'Your Technician is on way. Follow link to see ETA: https://c.na30.visual.force.com/apex/TechTrackerRooj. Thank you.',
