@@ -26,10 +26,10 @@ router.get('/', function(req, res, next) {
   //res.render('index', { title: 'Express' });
 });
 
-var startLat = 37.808000;
-    var startLong = -122.417743;
-    var endLat = 37.759006;
-    var endLong = -122.418594;
+var startLat = 60.174039;
+    var startLong = 24.940939;
+    var endLat = 59.337174;
+    var endLong = 18.067883;
     var pointsNo = 80;
     var latDelta = (endLat - startLat) / pointsNo;
     var lngDelta = (endLong - startLong) / pointsNo;
@@ -41,7 +41,7 @@ var runUpdate = function(){
     	(function(i){ 
  			setTimeout(function () {
             		updateObject(i);
-        			}, 10000); 
+        			}, 20000); 
  		})(i);
      }
     
@@ -53,6 +53,7 @@ var updateObject = function(index){
     var long = startLong + index * lngDelta;	
 
 	console.log("Running now.... " + index);
+	console.log("Lat is " + lat);
 	dbUtil.query("UPDATE salesforce.technician__c set technicianlocation__latitude__s=($1), technicianlocation__longitude__s=($2) WHERE sfid=($3)", [lat, long, 'a0136000006qmebAAA'])
 	.done(function(updateCount){
 		console.log("Completed update.." + index);
